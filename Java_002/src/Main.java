@@ -3,15 +3,17 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        int choice;
 
+        do {
+            System.out.println("Выберите задачу:");
+            System.out.println("1. Метод, возвращающий количество чётных элементов массива.");
+            System.out.println("2. Функция, возвращающую разницу между самым большим и самым ма- леньким элементами переданного не пустого массива.");
+            System.out.println("3. Функция, возвращающую истину, если в переданном массиве есть два соседних элемента, с нулевым значением.");
 
-        System.out.println("Выберите задачу:");
-        System.out.println("1. Метод, возвращающий количество чётных элементов массива.");
-        System.out.println("2. Функция, возвращающую разницу между самым большим и самым ма- леньким элементами переданного не пустого массива.");
-        System.out.println("3. Функция, возвращающую истину, если в переданном массиве есть два соседних элемента, с нулевым значением.");
+            choice = scanner.nextInt();
 
-        int choice = scanner.nextInt();
-
+        } while (choice < 1 || choice > 3);
 
         System.out.print("Введите размер массива: ");
         int size = scanner.nextInt();
@@ -21,21 +23,38 @@ public class Main {
         for (int i = 0; i < size; i++) {
             array[i] = scanner.nextInt();
         }
+//
+//        если мы введём элементов больше чем длинна массива то последние элементы будут не засчитанны
+//                например
+//        Выберите задачу:
+//        1. Метод, возвращающий количество чётных элементов массива.
+//        2. Функция, возвращающую разницу между самым большим и самым ма- леньким элементами переданного не пустого массива.
+//        3. Функция, возвращающую истину, если в переданном массиве есть два соседних элемента, с нулевым значением.
+//        3
+//        Введите размер массива: 4
+//        Введите элементы массива:
+//        2 3 2 3 0 0
+//        Наличие двух соседних элементов со значением 0: false
+
+//        ответ false так как два 0 не входят в масссив из 4 элементов
+
 
         switch (choice) {
-            case 1 -> {
+            case 1:
                 int evenCount = Even(array);
                 System.out.println("Количество четных элементов: " + evenCount);
-            }
-            case 2 -> {
+                break;
+            case 2:
                 int difference = MaxMin(array);
                 System.out.println("Разница между максимальным и минимальным элементами: " + difference);
-            }
-            case 3 -> {
+                break;
+            case 3:
                 boolean hasZeroNeighbours = ZeroTogether(array);
                 System.out.println("Наличие двух соседних элементов со значением 0: " + hasZeroNeighbours);
-            }
-            default -> System.out.println("Ошибка.");
+                break;
+            default:
+                System.out.println("Ошибка.");
+                break;
         }
     }
 
@@ -65,7 +84,6 @@ public class Main {
         return max - min;
     }
 
-  
     public static boolean ZeroTogether(int[] nums) {
         for (int i = 0; i < nums.length - 1; i++) {
             if (nums[i] == 0 && nums[i + 1] == 0) {
