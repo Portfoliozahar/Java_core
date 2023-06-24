@@ -22,7 +22,7 @@ public class Main {
             System.out.println(employee);
         }
 
-       Boss.upSalary(employees.toArray(new Employee[0]), 1000);
+       Boss.upSalary(employees.toArray(new Employee[0]), 2500);
         System.out.println("\nПосле повышения зарплаты:");
         for (Employee employee : employees) {
             System.out.println(employee);
