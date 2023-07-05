@@ -59,11 +59,11 @@ public class Main {
 
   public static void addOrder(List<Check> orders, Check order) {
     orders.stream()
-        .filter(existingOrder -> existingOrder.getCustomer().equals(order.getCustomer()))
+        .filter(existingOrder -> existingOrder.getClient().equals(order.getClient()))
         .findFirst()
         .ifPresent(existingOrder -> {
           System.out.println(
-              "Заказ для покупателя " + order.getCustomer().getFirstName() + " уже существует");
+              "Заказ для покупателя " + order.getClient().getFirstName() + " уже существует");
         });
 
     orders.add(order);
@@ -105,16 +105,15 @@ public class Main {
     return price * quantity;
   }
 
-  public static void validateCustomer(Client customer) throws ClientExc {
-    if (customer == null) {
-      throw new ClientExc(cust_not);
-    }
-  }
-
   public static void validateProduct(Product product) throws ProductExc {
     if (product == null) {
-      throw new ProductExc(product_not);
+      throw new ProductExc(cust_not);
     }
   }
 
+  public static void validateQuantity(int quantity) throws DiscountExc {
+    if (quantity <= 0 || quantity > max_amt) {
+      throw new DiscountExc(product_not);
+    }
+  }
 }

@@ -1,28 +1,30 @@
 
 public class Check {
 
-  private Client customer;
+  private Client client;
 
   private Product product;
 
-  private int amt;
+  private int quantity;
 
-  private double totalprice;
+  private double totalPrice;
 
-  public Check(Client customer, Product product, int amt) {
-    setCustomer(customer);
+  public Check(Client client, Product product, int quantity) {
+    setClient(client);
     setProduct(product);
-    setamt(amt);
-    setPrise();
+    setQuantity(quantity);
+    calculateTotalPrice();
   }
 
-  public Client getCustomer() {
-    return customer;
+  public Client getClient() {
+    return client;
   }
 
-  public void setCustomer(Client customer) {
-
-    this.customer = customer;
+  public void setClient(Client client) {
+    if (client == null) {
+      throw new IllegalArgumentException("Customer cannot be null.");
+    }
+    this.client = client;
   }
 
   public Product getProduct() {
@@ -30,36 +32,59 @@ public class Check {
   }
 
   public void setProduct(Product product) {
-
+    if (product == null) {
+      throw new IllegalArgumentException("Product cannot be null.");
+    }
     this.product = product;
   }
 
-  public int getamt() {
-    return amt;
+  public int getQuantity() {
+    return quantity;
   }
 
-  public void setamt(int amt) {
-    if (amt <= 0 || amt > 200) {
-      throw new IllegalArgumentException("сумма должна быть больше 0 и меньше либо равна 200");
+  /**
+   * Устанавливает количество заказанного продукта. Если количество меньше или
+   * равно нулю,
+   * выбрасывается исключение IllegalArgumentException.
+   *
+   * @param quantity Количество заказанного продукта.
+   */
+  public void setQuantity(int quantity) {
+    if (quantity <= 0 || quantity > 100) {
+      throw new IllegalArgumentException("Quantity must be greater than zero and less than or equal to 100");
     }
-    this.amt = amt;
-    setPrise();
+    this.quantity = quantity;
+    calculateTotalPrice();
   }
 
-  public double getPrise() {
-    return totalprice;
+  /**
+   * Возвращает общую цену заказа.
+   *
+   * @return Общая цена заказа.
+   */
+  public double getTotalPrice() {
+    return totalPrice;
   }
 
-  private void setPrise() {
+  /**
+   * Вычисляет общую цену заказа на основе количества и цены продукта с учетом
+   * скидки.
+   */
+  private void calculateTotalPrice() {
     double discountedPrice = product.getPrice() * (1 - product.getDis().getValue());
-    totalprice = amt * discountedPrice;
+    totalPrice = quantity * discountedPrice;
   }
 
+  /**
+   * Возвращает строковое представление объекта заказа.
+   *
+   * @return Строковое представление объекта заказа.
+   */
   @Override
   public String toString() {
-    return "Покупатель " + customer + '\n' +
+    return "Покупатель " + client + '\n' +
         " Продукт " + product + '\n' +
-        " Количество " + amt + '\n' +
-        " Общая цена " + totalprice + '\n';
+        " Количество " + quantity + '\n' +
+        " Цена итого " + totalPrice + '\n';
   }
 }
