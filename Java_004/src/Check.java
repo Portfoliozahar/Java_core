@@ -22,7 +22,7 @@ public class Check {
 
   public void setClient(Client client) {
     if (client == null) {
-      throw new IllegalArgumentException("Customer cannot be null.");
+      throw new IllegalArgumentException("Клиент не может быть нулевым.");
     }
     this.client = client;
   }
@@ -33,7 +33,7 @@ public class Check {
 
   public void setProduct(Product product) {
     if (product == null) {
-      throw new IllegalArgumentException("Product cannot be null.");
+      throw new IllegalArgumentException("Продукт не может быть нулевым.");
     }
     this.product = product;
   }
@@ -42,49 +42,28 @@ public class Check {
     return quantity;
   }
 
-  /**
-   * Устанавливает количество заказанного продукта. Если количество меньше или
-   * равно нулю,
-   * выбрасывается исключение IllegalArgumentException.
-   *
-   * @param quantity Количество заказанного продукта.
-   */
   public void setQuantity(int quantity) {
     if (quantity <= 0 || quantity > 100) {
-      throw new IllegalArgumentException("Quantity must be greater than zero and less than or equal to 100");
+      throw new IllegalArgumentException("Количество должно быть больше 0 и меньше либо равно 100.");
     }
     this.quantity = quantity;
     calculateTotalPrice();
   }
 
-  /**
-   * Возвращает общую цену заказа.
-   *
-   * @return Общая цена заказа.
-   */
   public double getTotalPrice() {
     return totalPrice;
   }
 
-  /**
-   * Вычисляет общую цену заказа на основе количества и цены продукта с учетом
-   * скидки.
-   */
   private void calculateTotalPrice() {
     double discountedPrice = product.getPrice() * (1 - product.getDis().getValue());
     totalPrice = quantity * discountedPrice;
   }
 
-  /**
-   * Возвращает строковое представление объекта заказа.
-   *
-   * @return Строковое представление объекта заказа.
-   */
   @Override
   public String toString() {
     return "Покупатель " + client + '\n' +
         " Продукт " + product + '\n' +
         " Количество " + quantity + '\n' +
-        " Цена итого " + totalPrice + '\n';
+        " Общая цена " + totalPrice + '\n';
   }
 }
